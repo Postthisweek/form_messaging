@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Contact Us form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    .error {
+      color: red;
+      font-size: 0.9rem;
+    }
+    .error:focus {
+      outline: 2px solid red;
+    }
+    .sr-only {
+      position: absolute;
+      left: -9999px;
+      top: -9999px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h2>Contact Us</h2>
+  
+  <!-- ARIA live region for screen reader notifications -->
+  <div aria-live="polite" id="error-announcements" class="sr-only"></div>
+  
+  <!-- Accessible Form -->
+  <form id="accessible-form" novalidate>
+    <!-- First Name -->
+    <div>
+      <label for="first-name">First Name:</label>
+      <input type="text" id="first-name" name="first-name" aria-required="true" />
+      <span id="first-name-error" class="error" aria-live="polite"></span>
+    </div>
+
+    <!-- Last Name -->
+    <div>
+      <label for="last-name">Last Name:</label>
+      <input type="text" id="last-name" name="last-name" aria-required="true" />
+      <span id="last-name-error" class="error" aria-live="polite"></span>
+    </div>
+
+    <!-- Email -->
+    <div>
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" aria-required="true" />
+      <span id="email-error" class="error" aria-live="polite"></span>
+    </div>
+
+    <!-- Message -->
+    <div>
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" aria-required="true"></textarea>
+      <span id="message-error" class="error" aria-live="polite"></span>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    // Form validation logic
+    const form = document.getElementById("accessible-form");
+    const firstNameField = document.getElementById("first-name");
+    const lastNameField = document.getElementById("last-name");
+    const emailField = document.getElementById("email");
+    const messageField = document.getElementById("message");
+    const firstNameError = document.getElementById("first-name-error");
+    const lastNameError = document.getElementById("last-name-error");
+    const emailError = document.getElementById("email-error");
+    const messageError = document.getElementById("message-error");
+    const errorAnnouncements = document.getElementById("error-announcements");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent default submission
+      let hasError = false;
+
+      // Clear previous errors
+      firstNameError.textContent = "";
+      lastNameError.textContent = "";
+      emailError.textContent = "";
+      messageError.textContent = "";
+      errorAnnouncements.textContent = "";
+
+      // Check First Name field
+      if (!firstNameField.value.trim()) {
+        firstNameError.textContent = "Please enter your first name.";
+        firstNameField.focus();
+        errorAnnouncements.textContent = "Error: First name is required.";
+        hasError = true;
+      }
+
+      // Check Last Name field
+      if (!lastNameField.value.trim()) {
+        lastNameError.textContent = "Please enter your last name.";
+        if (!hasError) {
+          lastNameField.focus();
+          errorAnnouncements.textContent = "Error: Last name is required.";
+        }
+        hasError = true;
+      }
+
+      // Check Email field
+      if (!emailField.value.trim()) {
+        emailError.textContent = "Please enter your email address.";
+        if (!hasError) {
+          emailField.focus();
+          errorAnnouncements.textContent = "Error: Email address is required.";
+        }
+        hasError = true;
+      }
+
+      // Check Message field
+      if (!messageField.value.trim()) {
+        messageError.textContent = "Please enter your message.";
+        if (!hasError) {
+          messageField.focus();
+          errorAnnouncements.textContent = "Error: Message is required.";
+        }
+        hasError = true;
+      }
+
+      // If no errors, submit the form (here you would integrate your logic or submission API)
+      if (!hasError) {
+        alert("Form submitted successfully!");
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
